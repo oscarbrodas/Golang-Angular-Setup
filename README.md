@@ -9,4 +9,4 @@ To start the go server:
 Be in the api directory
 run "make" or "go run httpd/main.go"
 
-Must be started two seperate terminals
+Must be started in two seperate terminals
