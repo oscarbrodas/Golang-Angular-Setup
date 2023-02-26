@@ -1,10 +1,11 @@
 package handler
 
 import (
+	"encoding/json"
 	"net/http"
 	"newsfeeder/platform/newsfeed"
 
-	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type newsfeedPostRequest struct {
@@ -12,18 +13,18 @@ type newsfeedPostRequest struct {
 	Post  string `json:"post"`
 }
 
-func NewsfeedPost(feed newsfeed.Adder) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func NewsfeedPost(db *gorm.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
 		requestBody := newsfeedPostRequest{}
-		c.Bind(&requestBody)
+		json.NewDecoder(r.Body).Decode(&requestBody)
 
 		item := newsfeed.Item{
 			Title: requestBody.Title,
 			Post:  requestBody.Post,
 		}
-		feed.Add(item)
-
-		c.Status(http.StatusNoContent)
+		db.Create(&item)
+		json.NewEncoder(w).Encode("Added Post")
 	}
 
 }

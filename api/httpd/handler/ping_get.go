@@ -1,14 +1,14 @@
 package handler
 
 import (
+	"encoding/json"
 	"net/http"
-
-	"github.com/gin-gonic/gin"
 )
 
-func PingGet() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		c.JSON(http.StatusOK, map[string]string{
+func PingGet() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(map[string]string{
 			"hello": "Found me",
 		})
 	}
