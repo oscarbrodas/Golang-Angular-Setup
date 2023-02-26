@@ -7,6 +7,8 @@ run the command "npm run start"
 
 To start the go server:
 Be in the api directory
-run "make" or "go run httpd/main.go"
+run "make"
 
 Must be started in two seperate terminals
+
+Got to "localhost:5000" in your browser and the webpage should display
